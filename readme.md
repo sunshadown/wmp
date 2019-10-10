@@ -1,0 +1,1 @@
+Projekt z przedmiotu widzenie maszynowe
