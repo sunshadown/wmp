@@ -1,8 +1,8 @@
 
 class Model:
     def __init__(self):
-        pass
+        raise NotImplementedError
     def render(self):
-        pass
+        raise NotImplementedError
     def update(self, dt):
-        pass
+        raise NotImplementedError
