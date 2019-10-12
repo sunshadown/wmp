@@ -2,6 +2,7 @@
 class Model:
     mouse_callback = None
     key_callback = None
+    path = None
     is_clicked = False
     is_focused = False
 

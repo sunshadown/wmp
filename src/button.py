@@ -37,7 +37,7 @@ class Button(Model):
     def update(self, dt):
         if self.mouse_callback is not None:
             if self.is_clicked:
-                self.mouse_callback()
+                self.path = self.mouse_callback()
                 self.is_clicked = False
 
         if self.is_focused:

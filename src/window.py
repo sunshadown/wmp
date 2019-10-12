@@ -4,7 +4,7 @@ from pyglet.window import mouse
 from menu import Menu
 
 class Window:
-    window = pyglet.window.Window(caption='WMP alpha version')
+    window = pyglet.window.Window(caption='WMP alpha version', resizable = True)
     window_x = None
     window_y = None
     cursor_image = pyglet.image.load("./resources/images/cursor.png")
@@ -14,11 +14,12 @@ class Window:
     label = pyglet.text.Label('WMP alpha',
                           font_name='Times New Roman',
                           font_size=36,
-                          x=200, y=800,
+                          x=120, y=700,
                           anchor_x='center', anchor_y='center')
 
     def __init__(self):
-        self.window.set_fullscreen(True)
+        #self.window.set_fullscreen(True)
+        self.window.set_size(1920,1080)
         self.window_x = self.window.width
         self.window_y = self.window.height
         self.window.set_mouse_cursor(self.cursor)
