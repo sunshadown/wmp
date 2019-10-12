@@ -10,11 +10,11 @@ class Window:
     cursor_image = pyglet.image.load("./resources/images/cursor.png")
     cursor = pyglet.window.ImageMouseCursor(cursor_image, 37, 60)
     menu = Menu()
-    background = pyglet.image.load('./resources/images/background.jpg')
+    background = pyglet.image.load('./resources/images/background3.jpg')
     label = pyglet.text.Label('WMP alpha',
                           font_name='Times New Roman',
                           font_size=36,
-                          x=120, y=700,
+                          x=270, y=720,
                           anchor_x='center', anchor_y='center')
 
     def __init__(self):
