@@ -87,9 +87,10 @@ class Menu:
                 i.path = None
                 self.LoadImagePaths()
         
-        if self.is_imagesloaded[2] is not None and self.text is None:
+        if self.is_imagesloaded[2] is not None:
             self.LoadImagesLabel()
             self.preview = Preview(self.image_paths, 280, 100)
+            self.is_imagesloaded[2] = None
 
         if self.preview is not None:
             self.preview.update(dt)

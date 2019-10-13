@@ -1,4 +1,38 @@
-matplotlib
-pyglet
-numpy
-opencv
+pip install matplotlib
+pip install pyglet
+pip install numpy
+pip install opencv-python
+pip install opencv-contrib-python
+pip install -U pip virtualenv
+pip install tensorflow
+
+#TensorFlow Requires
+#Python > 3.4 and pip >= 19.0
+python3 or python --version
+pip3 or pip --version
+virtualenv --version
+
+#Create a virtual environment (recommended)
+virtualenv --system-site-packages -p python ./venv
+
+#cannot be loaded because running scripts is disabled on this system
+.\venv\Scripts\activate 
+#Solution
+PowerShell execution policy is default set to Restricted. You can change the PowerShell execution policies with Set-ExecutionPolicy cmdlet. To run outside script set policy to RemoteSigned.
+
+Restricted – No scripts can be run.
+AllSigned – Only scripts signed by a trusted publisher can be run.
+RemoteSigned – Downloaded scripts must be signed by a trusted publisher.
+Unrestricted – All Windows PowerShell scripts can be run.
+
+for example run visual studio code with admin previlages
+PS-powershell C:\> Set-ExecutionPolicy RemoteSigned 
+PS C:\> get-executionpolicy 
+
+pip list  # show packages installed within the virtual environment
+deactivate  # don't exit until you're done using TensorFlow
+
+if ur cpu doesn't support standard pip tensorflow build follow instructions bellow
+https://github.com/lakshayg/tensorflow-build
+https://github.com/fo40225/tensorflow-windows-wheel
+pip install --ignore-installed --upgrade /path/to/binary.whl --user
