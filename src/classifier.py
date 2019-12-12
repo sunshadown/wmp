@@ -8,7 +8,7 @@ import cv2
 
 print("TensorFlow version: ",tf.__version__)
 
-options = {"model": "cfg/yolo.cfg", "train": "", "dataset": "dokumenty/learn", "annotation": "dokumenty/learn" , "labels": "dok_lab.txt"}
+options = {"model": "cfg/yolov2.cfg", "load": "bin/yolov2.weights","train": "", "dataset": "dokumenty/learn/", "annotation": "dokumenty/learn/" , "labels": "dok_lab.txt"}
 
 tfnet = TFNet(options)
 
