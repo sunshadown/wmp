@@ -1,0 +1,22 @@
+<annotation>
+  <folder>images</folder>
+  <filename>695.jpg</filename>
+  <size>
+    <width>550</width>
+    <height>412</height>
+    <depth>3</depth>
+  </size>
+  <segmented>0</segmented>
+  <object>
+    <name>stamp</name>
+    <pose>center</pose>
+    <truncated>1</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>187</xmin>
+      <ymin>76</ymin>
+      <xmax>365</xmax>
+      <ymax>278</ymax>
+    </bndbox>
+  </object>
+</annotation>

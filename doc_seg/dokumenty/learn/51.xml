@@ -1,0 +1,34 @@
+<annotation>
+  <folder>images</folder>
+  <filename>51.JPG</filename>
+  <size>
+    <width>598</width>
+    <height>800</height>
+    <depth>3</depth>
+  </size>
+  <segmented>0</segmented>
+  <object>
+    <name>stamp</name>
+    <pose>center</pose>
+    <truncated>1</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>311</xmin>
+      <ymin>5</ymin>
+      <xmax>504</xmax>
+      <ymax>136</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>text</name>
+    <pose>center</pose>
+    <truncated>1</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>44</xmin>
+      <ymin>137</ymin>
+      <xmax>575</xmax>
+      <ymax>783</ymax>
+    </bndbox>
+  </object>
+</annotation>
