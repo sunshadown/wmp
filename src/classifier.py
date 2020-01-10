@@ -8,10 +8,7 @@ import cv2
 
 print("TensorFlow version: ",tf.__version__)
 
-options = {"model": "cfg/yolov2.cfg", "load": "bin/yolov2.weights","train": "", "dataset": "dokumenty/learn/", "annotation": "dokumenty/learn/" , "labels": "dok_lab.txt"}
+options = {"model": "doc_seg/cfg/tiny-yolo-voc-6c.cfg","load": -1, "train": True, "gpu": 0.8, "epoch": 50, "dataset": "doc_seg/dokumenty/learn/", "annotation": "doc_seg/dokumenty/learn/" , "labels": "doc_seg/dok_lab.txt"}
 
 tfnet = TFNet(options)
-
-imgcv = cv2.imread("./dokumenty/learn/3.jpg")
-result = tfnet.return_predict(imgcv)
-print(result)
+tfnet.train()
