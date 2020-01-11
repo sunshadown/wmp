@@ -19,7 +19,7 @@ print(result)
 
 for i in range(len(result)):
     data = result[i]
-    top = data['toplgit eft']
+    top = data['topleft']
     bot = data['bottomright']
     text = data['label']
     if text == 'text':
