@@ -15,3 +15,15 @@ Setup needed just for classify
 3. [Ckpt data](https://mega.nz/#F!OklgFa7J!iF1rsXXpXPb05u2DKWXnIA), put into wmp/ckpt
 
 
+# Training
+
+To train net run: 
+
+wmp/src/classifier.py
+
+
+# Prediction
+
+To predict classes on desired images run: 
+
+wmp/src/classifier_predict.py
