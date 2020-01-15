@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 
-def segmentation(img,top,bot,color):
+def segmentation(img,top,bot,color,typ):
     crop,edged,x1,x2,y1,y2 = resizeROI(img,top,bot,5)
     contours, hierarchy=cv2.findContours(edged,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
     if len(contours) > 1:
@@ -10,7 +10,7 @@ def segmentation(img,top,bot,color):
         dilation = cv2.dilate(edged, kernel)
         edged = cv2.morphologyEx(dilation, cv2.MORPH_CLOSE, kernel)
         contours, hierarchy=cv2.findContours(edged,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
-        if len(contours) > 1:
+        if len(contours) > 1 and typ != 'text':
             temp = largest_contour_find(contours)
             contours = []
             contours.append(temp)
