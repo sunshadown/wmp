@@ -1,22 +1,58 @@
 import cv2
 import numpy as np
-
+import math
 
 def segmentation(img,top,bot,color,typ):
     crop,edged,x1,x2,y1,y2 = resizeROI(img,top,bot,5)
-    contours, hierarchy=cv2.findContours(edged,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
-    if len(contours) > 1:
-        kernel = np.ones((3,3), np.uint8)
-        dilation = cv2.dilate(edged, kernel)
-        edged = cv2.morphologyEx(dilation, cv2.MORPH_CLOSE, kernel)
-        contours, hierarchy=cv2.findContours(edged,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
-        if len(contours) > 1 and typ != 'text':
-            temp = largest_contour_find(contours)
-            contours = []
-            contours.append(temp)
-    cv2.drawContours(crop,contours,-1,color,cv2.FILLED)
-    img[y1:y2,x1:x2] = crop
+
+    crop = img[y1:y2,x1:x2]
+    pixel_values = crop.reshape((-1, 3))
+    pixel_values = np.float32(pixel_values)
+    criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 100, 0.2)
+  
+    _, labels, (centers) = cv2.kmeans(pixel_values, 2, None, criteria, 10, cv2.KMEANS_RANDOM_CENTERS)
+    centers = np.uint8(centers)
+    background = centers[0].copy()
+    tresh = calcDiff(centers[1])
+    centers[0] = color
+    labels = labels.flatten()
+    segmented_image = centers[labels.flatten()]
+    segmented_image = segmented_image.reshape(crop.shape)
+    if segmented_image[0,0,0]!=color[0] and segmented_image[0,0,1]!=color[1] and segmented_image[0,0,2]!=color[2]:
+        background = centers[1].copy()
+        tresh = calcDiff(centers[0])
+
+    k = 3    
+    _, labels, (centers) = cv2.kmeans(pixel_values, k, None, criteria, 10, cv2.KMEANS_RANDOM_CENTERS)
+    centers = np.uint8(centers)
+
+    idx = findBack(background,centers) 
+    for i in range(k):
+        if i != idx:
+            if typ != 'text':
+                if centers[i,0]>100 or centers[i,1]>100 or centers[i,2]>100:
+                    centers[i] = color 
+            else:
+                if calcDiff(centers[i])<=tresh:
+                    centers[i] = color
+
+    segmented_image = centers[labels.flatten()]
+    segmented_image = segmented_image.reshape(crop.shape) 
+
+    img[y1:y2,x1:x2] = segmented_image
     return img
+
+def findBack(back,center):
+    back = np.float32(back)
+    center = np.float32(center)
+    length = []
+    for i in range(len(center)):
+        length.append(math.sqrt(pow(back[0]-center[i,0],2)+pow(back[1]-center[i,1],2)+pow(back[2]-center[i,2],2)))
+    return length.index(min(length))
+
+def calcDiff(num):
+    num = np.float32(num)
+    return abs(num[0]-num[1])+abs(num[0]-num[2])+abs(num[1]-num[2])
 
 def resizeROI(img,top,bot,tresh):
     tresh = tresh*255
@@ -64,18 +100,3 @@ def resizeROI(img,top,bot,tresh):
         else:
             break       
     return crop,edged,xT,xB,yT,yB
-
-def largest_contour_find(contours):
-    max_area=0
-    largest_contour=-1
-    for i in range(len(contours)):
-        cont=contours[i]
-        area=cv2.contourArea(cont)
-        if(area>max_area):
-            max_area=area
-            largest_contour=i
-    if(largest_contour==-1):
-        return 0
-    else:
-        l_contour=contours[largest_contour]
-        return l_contour
