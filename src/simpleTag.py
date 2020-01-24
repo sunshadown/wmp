@@ -26,8 +26,8 @@ def colorDef(typ):
 # wpisująć exit obrazek jest zapisywany i program się kończy
 # jak popełnisz błąd to nie da się go cofnąć xD trzeba wtedy od nowa zaczynać xD
 # co nie wyjdzie trzeba ręcznie
-name = '2'
-image = cv2.imread("doc_seg/dokumenty/test/"+name+".jpg")
+name = '39'
+image = cv2.imread("C:/GitRepos/wmp/doc_seg/dokumenty/learn/"+name+".jpg")
 inp = 'start'
 while inp != 'exit':
     roi = cv2.selectROI(image,False)  
@@ -59,10 +59,12 @@ while inp != 'exit':
                 background[0] = color
             elif inp == 'g':
                 background[1] = color
-            else:
+            elif inp == 'b':
                 background[2] = color
             segmented_image = background[labels.flatten()]
             segmented_image = segmented_image.reshape(img.shape)
+            if inp != 'r' and inp != 'g' and inp != 'b':
+                segmented_image = image[int(roi[1]):int(roi[1]+roi[3]), int(roi[0]):int(roi[0]+roi[2])]
         if k == 2:         
             background = centers[0].copy()
             centers[0] = color          
@@ -77,4 +79,4 @@ while inp != 'exit':
             segmented_image = image[int(roi[1]):int(roi[1]+roi[3]), int(roi[0]):int(roi[0]+roi[2])]
         image[int(roi[1]):int(roi[1]+roi[3]), int(roi[0]):int(roi[0]+roi[2])] = segmented_image
 
-cv2.imwrite("doc_seg/dokumenty/test/"+name+"ref.jpg",image)
+cv2.imwrite("C:/GitRepos/wmp/doc_seg/dokumenty/test/"+name+"ref.jpg",image)
