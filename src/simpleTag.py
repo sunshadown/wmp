@@ -26,8 +26,9 @@ def colorDef(typ):
 # wpisująć exit obrazek jest zapisywany i program się kończy
 # jak popełnisz błąd to nie da się go cofnąć xD trzeba wtedy od nowa zaczynać xD
 # co nie wyjdzie trzeba ręcznie
-name = '39'
-image = cv2.imread("C:/GitRepos/wmp/doc_seg/dokumenty/learn/"+name+".jpg")
+name = '87e'
+#77, 80, 83, 86 zdjecie zle zrobione
+image = cv2.imread("C:/GitRepos/wmp/doc_seg/dokumenty/test/"+name+".jpg")
 inp = 'start'
 while inp != 'exit':
     roi = cv2.selectROI(image,False)  
@@ -79,4 +80,5 @@ while inp != 'exit':
             segmented_image = image[int(roi[1]):int(roi[1]+roi[3]), int(roi[0]):int(roi[0]+roi[2])]
         image[int(roi[1]):int(roi[1]+roi[3]), int(roi[0]):int(roi[0]+roi[2])] = segmented_image
 
+cv2.destroyAllWindows()
 cv2.imwrite("C:/GitRepos/wmp/doc_seg/dokumenty/test/"+name+"ref.jpg",image)
