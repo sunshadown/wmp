@@ -1,11 +1,11 @@
 import cv2
 import numpy as np
 import math
+from compareResult import compareResult
 
-def segmentation(img,top,bot,color,typ):
+def segmentation(img,ref,top,bot,color,typ):
     crop,edged,x1,x2,y1,y2 = resizeROI(img,top,bot,5)
 
-    crop = img[y1:y2,x1:x2]
     pixel_values = crop.reshape((-1, 3))
     pixel_values = np.float32(pixel_values)
     criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 100, 0.2)
@@ -39,6 +39,8 @@ def segmentation(img,top,bot,color,typ):
     segmented_image = centers[labels.flatten()]
     segmented_image = segmented_image.reshape(crop.shape) 
 
+    result = compareResult(segmented_image,ref,(x1,x2,y1,y2),typ)
+    segmented_image = cv2.putText(segmented_image,str(round(result,2)),(0,segmented_image.shape[0]-5),cv2.FONT_HERSHEY_SIMPLEX,0.3,(0,0,0),1)
     img[y1:y2,x1:x2] = segmented_image
     return img
 

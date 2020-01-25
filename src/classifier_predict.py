@@ -10,12 +10,14 @@ import cv2
 from stamp_segmentation import segmentation
 from object_list import color_list
 
+
 options = {"model": "doc_seg/cfg/tiny-yolo-voc-6c.cfg","load": -1, "gpu": 0.8, "labels": "doc_seg/dok_lab.txt",'backup':'ckpt/',"threshold": 0.5}
 
+name = '2'
 tfnet = TFNet(options)
 tfnet.load_from_ckpt()
-imgcv = cv2.imread("doc_seg/dokumenty/learn/38.jpg")
-img = imgcv.copy()
+imgcv = cv2.imread("doc_seg/dokumenty/test/"+name+".jpg")
+ref = cv2.imread("doc_seg/dokumenty/test/"+name+"ref.jpg")
 result = tfnet.return_predict(imgcv)
 print(result)
 
@@ -25,20 +27,26 @@ for i in range(len(result)):
     bot = data['bottomright']
     text = data['label']
     if text == 'text':
-        imgcv = segmentation(imgcv,top,bot,(255,0,0),text)
+        imgcv = segmentation(imgcv,ref,top,bot,(255,0,0),text)
     if text == 'stamp':
-        imgcv = segmentation(imgcv,top,bot,(0,255,0),text)
+        imgcv = segmentation(imgcv,ref,top,bot,(0,255,0),text)
     if text == 'logo':
-        imgcv = segmentation(imgcv,top,bot,(0,0,255),text)
+        imgcv = segmentation(imgcv,ref,top,bot,(0,0,255),text)
     if text == 'foto':
-        imgcv = segmentation(imgcv,top,bot,(255,255,0),text)
+        imgcv = segmentation(imgcv,ref,top,bot,(255,255,0),text)
     if text == 'table':
-        imgcv = segmentation(imgcv,top,bot,(255,0,255),text)
+        imgcv = segmentation(imgcv,ref,top,bot,(255,0,255),text)
     if text == 'signature':
-        imgcv = segmentation(imgcv,top,bot,(0,255,255),text)
+        imgcv = segmentation(imgcv,ref,top,bot,(0,255,255),text)
 
-cv2.imshow('Orginal',cv2.resize(img,(350,500)))
-cv2.imshow('Detected',cv2.resize(imgcv,(350,500)))
+shape = imgcv.shape
+shape = list(shape)
+if shape[0]>1000 or shape[1]>1000:
+    shape[1] = int(shape[1]*0.5)
+    shape[0] = int(shape[0]*0.5)
+
+cv2.imshow('Detected',cv2.resize(imgcv,(shape[1],shape[0])))
+cv2.imshow('Reference',cv2.resize(ref,(shape[1],shape[0])))
 cv2.imshow('Color object',color_list())
 cv2.waitKey(0)
 cv2.destroyAllWindows()
