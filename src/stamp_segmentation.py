@@ -39,10 +39,10 @@ def segmentation(img,ref,top,bot,color,typ):
     segmented_image = centers[labels.flatten()]
     segmented_image = segmented_image.reshape(crop.shape) 
 
-    result = compareResult(segmented_image,ref,(x1,x2,y1,y2),typ)
+    result,pixels = compareResult(segmented_image,ref,(x1,x2,y1,y2),typ)
     segmented_image = cv2.putText(segmented_image,str(round(result,2)),(0,segmented_image.shape[0]-5),cv2.FONT_HERSHEY_SIMPLEX,0.3,(0,0,0),1)
     img[y1:y2,x1:x2] = segmented_image
-    return img
+    return img,pixels
 
 def findBack(back,center):
     back = np.float32(back)

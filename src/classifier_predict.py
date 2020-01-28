@@ -9,6 +9,7 @@ import json
 import cv2
 from stamp_segmentation import segmentation
 from object_list import color_list
+from compareResult import maxPixels
 
 
 options = {"model": "doc_seg/cfg/tiny-yolo-voc-6c.cfg","load": -1, "gpu": 0.8, "labels": "doc_seg/dok_lab.txt",'backup':'ckpt/',"threshold": 0.5}
@@ -21,23 +22,28 @@ ref = cv2.imread("doc_seg/dokumenty/test/"+name+"ref.jpg")
 result = tfnet.return_predict(imgcv)
 print(result)
 
+allPix = maxPixels(ref)
+detectPIx = 0
 for i in range(len(result)):
     data = result[i]
     top = data['topleft']
     bot = data['bottomright']
     text = data['label']
     if text == 'text':
-        imgcv = segmentation(imgcv,ref,top,bot,(255,0,0),text)
+        imgcv,temp = segmentation(imgcv,ref,top,bot,(255,0,0),text)
     if text == 'stamp':
-        imgcv = segmentation(imgcv,ref,top,bot,(0,255,0),text)
+        imgcv,temp = segmentation(imgcv,ref,top,bot,(0,255,0),text)
     if text == 'logo':
-        imgcv = segmentation(imgcv,ref,top,bot,(0,0,255),text)
+        imgcv,temp = segmentation(imgcv,ref,top,bot,(0,0,255),text)
     if text == 'foto':
-        imgcv = segmentation(imgcv,ref,top,bot,(255,255,0),text)
+        imgcv,temp = segmentation(imgcv,ref,top,bot,(255,255,0),text)
     if text == 'table':
-        imgcv = segmentation(imgcv,ref,top,bot,(255,0,255),text)
+        imgcv,temp = segmentation(imgcv,ref,top,bot,(255,0,255),text)
     if text == 'signature':
-        imgcv = segmentation(imgcv,ref,top,bot,(0,255,255),text)
+        imgcv,temp = segmentation(imgcv,ref,top,bot,(0,255,255),text)
+    detectPIx = detectPIx +temp
+
+print('Detected: '+str(round((100*detectPIx)/allPix,2))+'%'+' of all pixels')
 
 shape = imgcv.shape
 shape = list(shape)

@@ -15,10 +15,27 @@ def compareResult(img,imgRef,roi,typ):
     sum_img = np.sum(img_hsv)  
     sum_ref = np.sum(imgRef_hsv)
     if sum_ref == 0:
-        return 0.0
+        return 0.0,0
     else:
-        return (100*sum_img)/sum_ref 
+        pixel = sum_ref
+        percent = (100*sum_img)/sum_ref
+        if percent > 200 or percent < 80:
+            pixel = 0
+        elif percent >= 80 and percent <=100:
+            pixel = sum_img
+        return percent,pixel 
 
+def maxPixels(img):
+    typ = ['text','stamp','logo','foto','table','signature']
+    img_hsv = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
+    sum_img = 0
+    for i in typ:
+        h_low = h_val(i)
+        img_temp = cv2.inRange(img_hsv,(h_low,125,125),(h_low+10,255,255))
+        img_temp=img_temp/255 
+        temp = np.sum(img_temp)
+        sum_img = sum_img+temp
+    return sum_img
 
 def h_val(typ):
     if typ == 'text':
