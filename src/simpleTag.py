@@ -26,7 +26,7 @@ def colorDef(typ):
 # wpisująć exit obrazek jest zapisywany i program się kończy
 # jak popełnisz błąd to nie da się go cofnąć xD trzeba wtedy od nowa zaczynać xD
 # co nie wyjdzie trzeba ręcznie
-name = '211'
+name = '530'
 image = cv2.imread("C:/GitRepos/wmp/doc_seg/dokumenty/test/"+name+".jpg")
 image2 = image.copy()
 inp = 'start'
